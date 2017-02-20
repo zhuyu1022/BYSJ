@@ -1,14 +1,17 @@
 package com.zhuyu.bysj.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by ZHUYU on 2017/2/15 0015.
  */
 
-public class User {
+public class User implements Serializable {
     private int id;
     private String account;
     private String password;
     private String phone;
+    private String realname;
     public User() {
     }
 
@@ -47,9 +50,23 @@ public class User {
         this.phone = phone;
     }
 
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
     @Override
     public String toString() {
-        return "User [id=" + id + ", account=" + account + ", password=" + password + "]";
+        return "User{" +
+                "id=" + id +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", realname='" + realname + '\'' +
+                '}';
     }
 
 

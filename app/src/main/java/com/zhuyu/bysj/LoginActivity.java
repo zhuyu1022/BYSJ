@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void login() {
+        loginBtn.setText("登陆中...");
         String account = accountText.getText().toString();
         String password = passwordText.getText().toString();
         if (TextUtils.isEmpty(account)) {
@@ -139,12 +140,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit();
                         editor.putString("account", user.getAccount());
                         editor.putString("password", user.getPassword());
-                        editor.putInt("userid", user.getId());
+                        editor.putInt("userid", user.getId());//用户id
                         editor.putString("phone", user.getPhone());
+                        editor.putString("realname", user.getRealname());
                         editor.apply();
                         //跳转主界面
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("account", account);
                         startActivity(intent);
                         finish();
                     } else if (state.equals("none")) {
@@ -166,6 +167,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }   finally {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            loginBtn.setText("登录");
+                        }
+                    });
+
                 }
             }
         });

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="goodsState">
+        <item>"正常"</item>
+        <item>"挂失"</item>
+        <item>"注销"</item>
+    </array>
+</resources>

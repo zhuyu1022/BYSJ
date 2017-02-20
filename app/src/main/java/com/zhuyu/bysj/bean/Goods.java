@@ -1,9 +1,11 @@
 package com.zhuyu.bysj.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by ZHUYU on 2017/2/16 0016.
  */
-public class Goods {
+public class Goods  implements Serializable {
     private int id;
     private int typeid;
     private int userid;

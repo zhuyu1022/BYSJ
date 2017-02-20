@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#e82201</color>
+    <!--<color name="colorPrimary">#e82201</color>
     <color name="colorPrimaryDark">#e82201</color>
-    <color name="colorAccent">#e82201</color>
+    <color name="colorAccent">#e82201</color>-->
     <color name="textColorLight">#ffffff</color>
+    <color name="textColorDark">#000</color>
+
+
+    <color name="colorPrimary">#e51c23</color>
+    <color name="colorPrimaryDark">#d01716</color>
+    <color name="colorAccent">#e51c23</color>
+    <color name="layoutBackgroundColor">#10000000</color>
+    <color name="layoutpressedColor">#30000000</color>
+    <color name="lineColor">#37000000</color>
+
+    <color name="transparencyColor">#00000000</color>
 </resources>
+

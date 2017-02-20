@@ -4,8 +4,11 @@ package com.zhuyu.bysj;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -30,6 +33,7 @@ import com.zhuyu.bysj.utils.FragmentUtil;
 
 import java.lang.reflect.Field;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String baseUrl = "http://192.168.1.101:8080/BYSJ/";
     public static String result=null;
     private final static int SCAN_CODE=1;
+    private final static int SCAN_PERMISSON=1;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private OkHttpClient client = new OkHttpClient();
@@ -45,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton scanBtn;
     private TextView resultText;
     private FrameLayout fragmentLayout;
-    private WebViewFragment fragment=null;
+    private CircleImageView navIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,30 +72,38 @@ public class MainActivity extends AppCompatActivity {
 
         View navHeaderView = navigationView.getHeaderView(0);//获取侧滑菜单头部布局
         nav_accountText = (TextView) navHeaderView.findViewById(R.id.nav_accountText);//获取头部布局中的控件
-        account = getIntent().getStringExtra("account");
-        if (!TextUtils.isEmpty(account)) {
-            nav_accountText.setText(account);
+        navIcon= (CircleImageView) navHeaderView.findViewById(R.id.nav_icon);
+
+        navIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setPersonalInfo();
+            }
+        });
+        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
+        String realname=preferences.getString("realname",null);
+        if (!TextUtils.isEmpty(realname)) {
+            nav_accountText.setText(realname);
         }
 
         scanBtn= (FloatingActionButton) findViewById(R.id.scanBtn);
         scanBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scan();
-            }
-        });
-        //resultText= (TextView) findViewById(R.id.resultText);
-
+        @Override
+        public void onClick(View v) {
+            scan();
+        }
+    });
         fragmentLayout= (FrameLayout) findViewById(R.id.fragmentLayout);
-
-
-
-
     }
 
+
+    private void setPersonalInfo(){
+        Intent intent=new Intent(MainActivity.this,PersonalActivity.class);
+        startActivity(intent);
+    }
     private void scan() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},SCAN_PERMISSON);
         }else {
             Intent intent=new Intent(MainActivity.this, CaptureActivity.class);
             startActivityForResult(intent,SCAN_CODE);
@@ -106,6 +119,22 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case SCAN_PERMISSON:
+                if (grantResults.length>0&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                    scan();
+                }else {
+                    Toast.makeText(this, "你拒绝了权限！", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -135,36 +164,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    /*   *//**   有BUG
-     * 设置drawlayout全屏滑动，传入参数1即可
-     * @param activity
-     * @param drawerLayout
-     * @param displayWidthPercentage
-     *//*
-    private void setDrawerLeftEdgeSize (Activity activity, DrawerLayout drawerLayout, float displayWidthPercentage) {
-        if (activity == null || drawerLayout == null) return;
-        try {
-            // 找到 ViewDragHelper 并设置 Accessible 为true
-            Field leftDraggerField =
-                    drawerLayout.getClass().getDeclaredField("mLeftDragger");//Right
-            leftDraggerField.setAccessible(true);
-            ViewDragHelper leftDragger = (ViewDragHelper) leftDraggerField.get(drawerLayout);
-
-            // 找到 edgeSizeField 并设置 Accessible 为true
-            Field edgeSizeField = leftDragger.getClass().getDeclaredField("mEdgeSize");
-            edgeSizeField.setAccessible(true);
-            int edgeSize = edgeSizeField.getInt(leftDragger);
-
-            // 设置新的边缘大小
-            Point displaySize = new Point();
-            activity.getWindowManager().getDefaultDisplay().getSize(displaySize);
-            edgeSizeField.setInt(leftDragger, Math.max(edgeSize, (int) (displaySize.x *
-                    displayWidthPercentage)));
-        } catch (NoSuchFieldException e) {
-        } catch (IllegalArgumentException e) {
-        } catch (IllegalAccessException e) {
-        }
-    }*/
 
 }
