@@ -8,21 +8,7 @@
     android:orientation="vertical"
     tools:context="com.zhuyu.bysj.RegisterActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/layout_title"></include>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,17 +28,18 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="账号："
+                android:text="手机号："
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/accountText"
+                android:id="@+id/phoneText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:digits="@string/inputType"
+                android:digits="@string/number"
                 android:maxLines="1"
-                android:hint="5~16位数字字母组合" />
+                android:inputType="phone"
+                android:hint="请输入11位手机号码" />
         </LinearLayout>
 
         <LinearLayout
@@ -100,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:digits="@string/inputType"
-                android:hint="再次输入密码"
+                android:hint="最少6个字符"
 
                 android:inputType="textPassword" />
         </LinearLayout>
@@ -116,20 +103,52 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="手机号："
+                android:text="昵称："
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/phoneText"
+                android:id="@+id/usernameText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:digits="@string/inputType"
-                android:hint="请填写正确的手机号"
-
-                android:inputType="phone" />
+                android:hint="20个字符以内"
+                />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="性别："
+                android:textSize="18sp" />
+
+            <RadioGroup
+                android:id="@+id/sexBtn"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/maleBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="男"/>
+                <RadioButton
+                    android:id="@+id/femaleBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="女"/>
+            </RadioGroup>
+        </LinearLayout>
 
         <Button
             android:id="@+id/registerBtn"

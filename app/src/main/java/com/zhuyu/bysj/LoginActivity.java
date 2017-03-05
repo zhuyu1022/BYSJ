@@ -2,7 +2,6 @@ package com.zhuyu.bysj;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,13 +13,22 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.zhuyu.bysj.bean.Goods;
+import com.zhuyu.bysj.bean.Goodsinfo;
+import com.zhuyu.bysj.bean.GoodsAndType;
+import com.zhuyu.bysj.bean.LoginInfo;
+import com.zhuyu.bysj.bean.Type;
 import com.zhuyu.bysj.bean.User;
+import com.zhuyu.bysj.utils.ActionBarUtil;
+import com.zhuyu.bysj.utils.GlideCacheUtil;
+import com.zhuyu.bysj.utils.Names;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.litepal.LitePal;
+import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,27 +38,31 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    private EditText accountText, passwordText;
+    private EditText phoneText, passwordText;
     private Button loginBtn, registerBtn;
     private OkHttpClient client;
+    private static final int REGISTER_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //创建数据库
+        LitePal.getDatabase();
         initView();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String account = preferences.getString("account", null);
-        String password = preferences.getString("password", null);
-        if ((!TextUtils.isEmpty(account)) && (!TextUtils.isEmpty(password))) {
-            accountText.setText(account);
+        String phone = preferences.getString(Names.PHONE, null);
+        String password = preferences.getString(Names.PASSWORD, null);
+        if ((!TextUtils.isEmpty(phone)) && (!TextUtils.isEmpty(password))) {
+            phoneText.setText(phone);
             passwordText.setText(password);
         }
 
     }
 
     private void initView() {
-        accountText = (EditText) findViewById(R.id.accountText);
+        ActionBarUtil.create(this, "欢迎", ActionBarUtil.NO_HOME);
+        phoneText = (EditText) findViewById(R.id.accountText);
         passwordText = (EditText) findViewById(R.id.passwordText);
         loginBtn = (Button) findViewById(R.id.loginBtn);
         registerBtn = (Button) findViewById(R.id.registerBtn);
@@ -76,17 +88,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void register() {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REGISTER_CODE);
     }
 
 
     private void login() {
         loginBtn.setText("登陆中...");
-        String account = accountText.getText().toString();
+        String phone = phoneText.getText().toString();
         String password = passwordText.getText().toString();
-        if (TextUtils.isEmpty(account)) {
+        if (TextUtils.isEmpty(phone)) {
             Toast.makeText(this, "请输入账号", Toast.LENGTH_SHORT).show();
-            accountText.setError("账号不能为空");
+            phoneText.setError("账号不能为空");
             return;
         }
         if (TextUtils.isEmpty(password)) {
@@ -95,13 +107,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        loginRequest(account, password);
+        loginRequest(phone, password);
     }
 
-    private void loginRequest(final String account, final String password) {
+    private void loginRequest(final String phone, final String password) {
         FormBody formBody = new FormBody.Builder()
-                .add("account", account)
-                .add("password", password)
+                .add(Names.PHONE, phone)
+                .add(Names.PASSWORD, password)
                 .build();
         String url = MainActivity.baseUrl + "login";
         Request request = new Request.Builder()
@@ -116,6 +128,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void run() {
                         Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
 
+                        loginBtn.setText("登录");
+
                     }
                 });
                 Log.d("onFailure: ", e.toString());
@@ -126,26 +140,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final String result = response.body().string();
                 Log.d("response:", result);
                 try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String state = jsonObject.getString("state");
+                    Gson gson = new Gson();
+                    LoginInfo loginInfo = gson.fromJson(result, LoginInfo.class);
+                    Log.d("loginInfo", loginInfo.toString());
+
+                    String state = loginInfo.state;
                     Log.d("state", state);
                     if (state.equals("ok")) {
-                        //Toast.makeText(LoginActivity.this, "登陆成功！", Toast.LENGTH_SHORT).show();
-                        //解析返回的json数据
-                        JSONArray jsonArray = jsonObject.getJSONArray("user");
-                        jsonObject = jsonArray.getJSONObject(0);
-                        Gson gson = new Gson();
-                        User user = gson.fromJson(jsonObject.toString(), User.class);
-                        //将用户信息保存到本地
+                        User user = loginInfo.user;
+                        //保存用户信息到本地
+                        saveUser(user);
+                        //1、清空数据库，包括goods表和type表
+                        DataSupport.deleteAll(Goods.class);
+                        DataSupport.deleteAll(Type.class);
+                        //2、清空glide中的所有缓存
+                        GlideCacheUtil.getInstance().clearImageAllCache(LoginActivity.this);
+
+                       Goodsinfo goodsinfo=loginInfo.goodsinfo;
+                        int counts=goodsinfo.counts;
                         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit();
-                        editor.putString("account", user.getAccount());
-                        editor.putString("password", user.getPassword());
-                        editor.putInt("userid", user.getId());//用户id
-                        editor.putString("phone", user.getPhone());
-                        editor.putString("realname", user.getRealname());
+                        editor.putInt(Names.COUNTS, counts);    //保存商品列表数量，用于后面的fragmentadaptet适配器判断用户是否有商品，动态添加fragment
                         editor.apply();
+                        if (counts>0){
+                          List<GoodsAndType> goodsAndTypelist =  goodsinfo.goodsAndTypelist;
+                            for (int i = 0; i <goodsAndTypelist.size() ; i++) {
+                                GoodsAndType goodsAndType=goodsAndTypelist.get(i);
+                                Goods goods=goodsAndType.goods;
+                                Type type=goodsAndType.type;
+                                //如果当前goods在数据库中不存在就保存，防止多余数据产生
+                                if (DataSupport.where("goodsid=?",goods.getGoodsid()+"").find(Goods.class).size()==0)
+                                { goods.save();}
+                                if (DataSupport.where("typeid=?",type.getTypeid()+"").find(Type.class).size()==0)
+                                { type.save();}
+                            }
+                        }
                         //跳转主界面
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        // intent.putExtra("goodsAndTypelist", (Serializable) goodsAndTypelist);
                         startActivity(intent);
                         finish();
                     } else if (state.equals("none")) {
@@ -153,7 +184,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void run() {
                                 Toast.makeText(LoginActivity.this, "账号不存在！", Toast.LENGTH_SHORT).show();
-                                accountText.setError("账号不存在！");
+                                phoneText.setError("账号不存在！");
                             }
                         });
                     } else if (state.equals("error")) {
@@ -165,9 +196,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                         });
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
-                }   finally {
+                } finally {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -178,5 +209,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REGISTER_CODE:
+                if (resultCode == RESULT_OK) {
+                    String phone = data.getExtras().getString(Names.PHONE);
+                    String password = data.getExtras().getString(Names.PASSWORD);
+                    // Log.d("phone", phone);
+                    //Log.d("password", password);
+                    if ((!TextUtils.isEmpty(phone)) && (!TextUtils.isEmpty(password))) {
+                        phoneText.setText(phone);
+                        passwordText.setText(password);
+                        loginRequest(phone, password);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    private void saveUser(User user) {
+        //将用户信息保存到本地
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit();
+        editor.putString(Names.PHONE, user.getPhone());     //用户账号，也是手机号
+        editor.putString(Names.PASSWORD, user.getPassword());     //  用户密码
+        editor.putInt(Names.USERID, user.getUserid());          //用户id
+        editor.putString(Names.USERNAME, user.getUsername());   //用户昵称
+        editor.putString(Names.IDNUMBER, user.getIdnumber());   //身份证
+        editor.putString(Names.SEX, user.getSex());
+        editor.putInt(Names.SCORE, user.getScore());
+        editor.putString(Names.WORDS, user.getWords());
+        editor.putString(Names.ICON, user.getIcon());
+        editor.apply();
     }
 }

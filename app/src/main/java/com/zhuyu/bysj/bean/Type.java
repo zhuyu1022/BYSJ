@@ -1,5 +1,7 @@
 package com.zhuyu.bysj.bean;
 
+import org.litepal.crud.DataSupport;
+
 import java.io.Serializable;
 
 /**
@@ -7,19 +9,29 @@ import java.io.Serializable;
  */
 
 
-public class Type implements Serializable {
+public class Type extends DataSupport implements Serializable {
     private int id;
+    private int typeid;
     private String typename;
     private String trademark;
     private String price;
     private String picture;
     private String trademark_chinese;
-    public int getId() {
+   public int getId() {
         return id;
     }
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getTypeid() {
+        return typeid;
+    }
+
+    public void setTypeid(int typeid) {
+        this.typeid = typeid;
+    }
+
     public String getTypename() {
         return typename;
     }
@@ -50,10 +62,16 @@ public class Type implements Serializable {
     public void setTrademark_chinese(String trademark_chinese) {
         this.trademark_chinese = trademark_chinese;
     }
+
     @Override
     public String toString() {
-        return "Type [id=" + id + ", typename=" + typename + ", trademark=" + trademark + ", price=" + price
-                + ", picture=" + picture + ", trademark_chinese=" + trademark_chinese + "]";
+        return "Type{" +
+                "trademark_chinese='" + trademark_chinese + '\'' +
+                ", picture='" + picture + '\'' +
+                ", price='" + price + '\'' +
+                ", trademark='" + trademark + '\'' +
+                ", typename='" + typename + '\'' +
+                ", typeid=" + typeid +
+                '}';
     }
-
 }

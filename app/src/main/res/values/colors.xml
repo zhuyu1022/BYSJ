@@ -6,14 +6,15 @@
     <color name="textColorLight">#ffffff</color>
     <color name="textColorDark">#000</color>
 
-
+    <color name="background">#ff9191</color>
     <color name="colorPrimary">#e51c23</color>
     <color name="colorPrimaryDark">#d01716</color>
     <color name="colorAccent">#e51c23</color>
     <color name="layoutBackgroundColor">#10000000</color>
     <color name="layoutpressedColor">#30000000</color>
     <color name="lineColor">#37000000</color>
-
+    <color name="textColor">#8a000000</color>
     <color name="transparencyColor">#00000000</color>
+
 </resources>
 

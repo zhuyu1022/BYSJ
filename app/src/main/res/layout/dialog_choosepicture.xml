@@ -8,21 +8,16 @@
         android:id="@+id/takephotoBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:background="@color/transparencyColor"
+        android:background="@drawable/layoutclick"
         android:text="拍摄"
-
         android:textSize="20sp" />
-
     <include layout="@layout/line"></include>
 
     <Button
         android:id="@+id/formalbumBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:background="@color/transparencyColor"
+        android:background="@drawable/layoutclick"
         android:text="从相册选择"
-
         android:textSize="20sp" />
 </LinearLayout>

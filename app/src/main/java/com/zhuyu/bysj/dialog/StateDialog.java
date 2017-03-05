@@ -1,13 +1,13 @@
-package com.zhuyu.bysj;
+package com.zhuyu.bysj.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import com.zhuyu.bysj.R;
 
 
 /**
@@ -19,7 +19,7 @@ public class StateDialog extends Dialog {
 
     private OnStateClickListener onStateClickListener;
 
-    protected StateDialog(Context context) {
+    public StateDialog(Context context) {
         super(context);
 
     }
@@ -34,7 +34,7 @@ public class StateDialog extends Dialog {
         //初始化界面控件
         initView();
         //初始化界面数据
-       // initData();
+        // initData();
         //初始化界面控件的事件
         initEvent();
     }
@@ -67,15 +67,13 @@ public class StateDialog extends Dialog {
         normalLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 return false;
-
             }
         });
     }
 
-    public void setOnStateClickListener(OnStateClickListener onStateClickListener){
-        this.onStateClickListener=onStateClickListener;
+    public void setOnStateClickListener(OnStateClickListener onStateClickListener) {
+        this.onStateClickListener = onStateClickListener;
     }
 
 

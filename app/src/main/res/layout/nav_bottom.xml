@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@drawable/layoutclick">
+    <LinearLayout
+        android:id="@+id/outloginLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:padding="10dp"
+        android:orientation="horizontal"
+        android:background="@drawable/layoutclick">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/change"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:text="切换账号"
+            android:textColor="@color/textColorDark"
+            android:textSize="18sp"
+            />
+
+    </LinearLayout>
+    <include layout="@layout/line"></include>
+    <LinearLayout
+        android:id="@+id/closeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:background="@drawable/layoutclick">
+        <ImageView
+            android:layout_marginLeft="16dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/close"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:text="退出"
+            android:textColor="@color/textColorDark"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
+</LinearLayout>

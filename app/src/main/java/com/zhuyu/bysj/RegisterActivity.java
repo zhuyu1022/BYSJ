@@ -1,18 +1,30 @@
 package com.zhuyu.bysj;
 
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.zhuyu.bysj.utils.ActionBarUtil;
+import com.zhuyu.bysj.utils.Names;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -21,77 +33,90 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity {
-    private Button registerBtn;
-    private EditText accountText, passwordText, confirmPasswordText, phoneText;
-    private OkHttpClient client;
 
+    @BindView(R.id.phoneText)
+    EditText phoneText;
+    @BindView(R.id.passwordText)
+    EditText passwordText;
+    @BindView(R.id.confirmPasswordText)
+    EditText confirmPasswordText;
+    @BindView(R.id.usernameText)
+    EditText usernameText;
+    @BindView(R.id.maleBtn)
+    RadioButton maleBtn;
+    @BindView(R.id.femaleBtn)
+    RadioButton femaleBtn;
+    @BindView(R.id.registerBtn)
+    Button registerBtn;
+    @BindView(R.id.sexBtn)
+    RadioGroup sexBtn;
+    private OkHttpClient client;
+    private  String sex="男";
+    private String phone ;
+    private String password ;
+    private String confirmPaaword ;
+    private String username ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        ButterKnife.bind(this);
         initView();
     }
 
     private void initView() {
         client = new OkHttpClient();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("新用户注册");
-        accountText = (EditText) findViewById(R.id.accountText);
-        passwordText = (EditText) findViewById(R.id.passwordText);
-        confirmPasswordText = (EditText) findViewById(R.id.confirmPasswordText);
-        phoneText = (EditText) findViewById(R.id.phoneText);
-        registerBtn = (Button) findViewById(R.id.registerBtn);
-        registerBtn.setOnClickListener(new View.OnClickListener() {
+        ActionBarUtil.create(this, "新用户注册", ActionBarUtil.DEFAULT_HOME);
+        sexBtn.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                register();
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId==maleBtn.getId()){
+                    sex="男";
+                }else if (checkedId==femaleBtn.getId()){
+                    sex="女";
+                }
             }
         });
-
     }
-
+    @OnClick(R.id.registerBtn)
+    public void onClick() {
+        register();
+    }
     private void register() {
-        String account = accountText.getText().toString();
-        String password = passwordText.getText().toString();
-        String confirmPaaword = confirmPasswordText.getText().toString();
-        String phone = phoneText.getText().toString();
-        if (TextUtils.isEmpty(account)) {
-            Toast.makeText(this, "请输入账号！", Toast.LENGTH_SHORT).show();
-            accountText.setError("请输入账号！");
+        phone = phoneText.getText().toString();
+        password = passwordText.getText().toString();
+        confirmPaaword = confirmPasswordText.getText().toString();
+        username = usernameText.getText().toString();
+        if (TextUtils.isEmpty(phone)) {
+            phoneText.setError("请输入手机号！");
             return;
         } else if (TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmPaaword)) {
-            Toast.makeText(this, "请输入密码！", Toast.LENGTH_SHORT).show();
             passwordText.setError("请输入密码!");
             confirmPasswordText.setError("请输入密码!");
             return;
         } else if (!password.equals(confirmPaaword)) {
-            Toast.makeText(this, "两次密码输入不一致，重新输入！", Toast.LENGTH_SHORT).show();
             passwordText.setError("密码不一致!");
             confirmPasswordText.setError("密码不一致!");
             return;
-        } else if (TextUtils.isEmpty(phone)) {
-            Toast.makeText(this, "请输入手机号!", Toast.LENGTH_SHORT).show();
-            phoneText.setError("请输入手机号!");
-            return;
-        }
-
-        if (password.length() < 6) {
+        }  else if (password.length() < 6) {
             passwordText.setError("密码不能小于6位");
             return;
-        } else if (phone.length()!=11){
+        } else if (phone.length() != 11) {
             phoneText.setError("请输入正确的手机号码！");
-            Toast.makeText(this, "请输入正确的手机号码！", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (username.length()>20){
+            usernameText.setError("昵称过长！");
+            return;
         }
-
-
+        requestRegister(phone,password,username,sex);
+    }
+    private void requestRegister(String phone,String password,String username,String sex){
         String url = MainActivity.baseUrl + "register";
         FormBody formBody = new FormBody.Builder()
-                .add("account", account)
-                .add("password", password)
-                .add("phone",phone)
+                .add(Names.PHONE, phone)
+                .add(Names.PASSWORD, password)
+                .add(Names.USERNAME,username)
+                .add(Names.SEX,sex)
                 .build();
         Request request = new Request.Builder()
                 .url(url)
@@ -116,6 +141,8 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (result.equals("ok")) {
+
+                            showFinishDialog();
                             Toast.makeText(RegisterActivity.this, "注册成功！", Toast.LENGTH_SHORT).show();
                         } else if (result.equals("error")) {
                             Toast.makeText(RegisterActivity.this, "账号已存在！", Toast.LENGTH_SHORT).show();
@@ -125,9 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -140,4 +165,23 @@ public class RegisterActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    private void showFinishDialog(){
+        AlertDialog dialog=new AlertDialog.Builder(this)
+                .setMessage("您已注册成功!")
+                .setTitle("恭喜")
+                .setCancelable(false)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent=new Intent();
+                        intent.putExtra(Names.PHONE,phone);
+                        intent.putExtra(Names.PASSWORD,password);
+                        setResult(RESULT_OK,intent);
+                     finish();
+                    }
+                })
+                .show();
+    }
+
+
 }

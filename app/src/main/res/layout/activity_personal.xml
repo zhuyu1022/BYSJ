@@ -38,7 +38,7 @@
                         android:id="@+id/iconLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
+                        android:padding="12dp"
                         android:background="@drawable/layoutclick"
                         >
 
@@ -48,7 +48,9 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="头像"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:id="@+id/textView2"
+                            android:textColor="@color/textColorDark"/>
 
                         <ImageView
                             android:id="@+id/iconImage"
@@ -64,7 +66,7 @@
                         android:id="@+id/usernameLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
+                        android:padding="12dp"
                         android:background="@drawable/layoutclick">
 
                         <TextView
@@ -73,7 +75,8 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="昵称"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:textColor="@color/textColorDark"/>
 
                         <TextView
                             android:id="@+id/usernameText"
@@ -88,7 +91,7 @@
                         android:id="@+id/phoneLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
+                        android:padding="12dp"
                         android:background="@drawable/layoutclick">
 
                         <TextView
@@ -97,8 +100,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:text="账号"
-                            android:textSize="18sp" />
+                            android:text="手机号"
+                            android:textSize="18sp"
+                            android:textColor="@color/textColorDark"/>
 
                         <TextView
                             android:id="@+id/phoneText"
@@ -114,7 +118,7 @@
                         android:id="@+id/idnumberLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
+                        android:padding="12dp"
                         android:background="@drawable/layoutclick">
 
                         <TextView
@@ -123,7 +127,8 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="身份证号"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:textColor="@color/textColorDark"/>
 
                         <TextView
                             android:id="@+id/idnumberText"
@@ -139,7 +144,7 @@
                         android:id="@+id/scoreLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
+                        android:padding="12dp"
                         android:background="@drawable/layoutclick">
 
                         <TextView
@@ -148,7 +153,8 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="积分"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:textColor="@color/textColorDark"/>
 
                         <TextView
                             android:id="@+id/scoreText"
@@ -175,7 +181,7 @@
                         android:id="@+id/sexLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
+                        android:padding="12dp"
                         android:background="@drawable/layoutclick">
 
                         <TextView
@@ -184,7 +190,8 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="性别"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:textColor="@color/textColorDark"/>
 
                         <TextView
                             android:id="@+id/sexText"
@@ -200,7 +207,7 @@
                         android:id="@+id/areaLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
+                        android:padding="12dp"
                         android:background="@drawable/layoutclick">
 
                         <TextView
@@ -209,7 +216,8 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="地区"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:textColor="@color/textColorDark"/>
 
                         <TextView
                             android:id="@+id/areaText"
@@ -225,7 +233,7 @@
                         android:id="@+id/wordsLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
+                        android:padding="12dp"
                         android:background="@drawable/layoutclick">
 
                         <TextView
@@ -234,7 +242,8 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:text="个性签名"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:textColor="@color/textColorDark"/>
 
                         <TextView
                             android:id="@+id/wordsText"

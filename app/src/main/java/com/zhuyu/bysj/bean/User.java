@@ -1,40 +1,44 @@
 package com.zhuyu.bysj.bean;
 
+import org.litepal.crud.DataSupport;
+
 import java.io.Serializable;
 
 /**
  * Created by ZHUYU on 2017/2/15 0015.
  */
 
-public class User implements Serializable {
+public class User extends DataSupport implements Serializable {
     private int id;
-    private String account;
+    private int userid;
     private String password;
     private String phone;
-    private String realname;
+    private String username;
+    private String idnumber;
+    private String icon;
+    private int score;
+    private String sex;
+    private String area;
+    private String words;
     public User() {
     }
-
-    public User( String account, String password,String phone) {
-
-        this.account = account;
-        this.password = password;
-        this.phone=phone;
-    }
-
 
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
-    public String getAccount() {
-        return account;
+
+    public int getUserid() {
+        return userid;
     }
-    public void setAccount(String account) {
-        this.account = account;
+
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
+
     public String getPassword() {
         return password;
     }
@@ -50,24 +54,75 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
-    public String getRealname() {
-        return realname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setRealname(String realname) {
-        this.realname = realname;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getIdnumber() {
+        return idnumber;
+    }
+
+    public void setIdnumber(String idnumber) {
+        this.idnumber = idnumber;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getWords() {
+        return words;
+    }
+
+    public void setWords(String words) {
+        this.words = words;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", account='" + account + '\'' +
+                "userid=" + userid +
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
-                ", realname='" + realname + '\'' +
+                ", username='" + username + '\'' +
+                ", idnumber='" + idnumber + '\'' +
+                ", icon='" + icon + '\'' +
+                ", score=" + score +
+                ", sex='" + sex + '\'' +
+                ", area='" + area + '\'' +
+                ", words='" + words + '\'' +
                 '}';
     }
-
-
 }

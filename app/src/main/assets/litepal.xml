@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+    <litepal>
+    <dbname value="BYSJdatabase"></dbname>
+    <version value="1"></version>
+    <list>
+        <mapping class="com.zhuyu.bysj.bean.User"></mapping>
+        <mapping class="com.zhuyu.bysj.bean.Goods"></mapping>
+        <mapping class="com.zhuyu.bysj.bean.Type"></mapping>
+    </list>
+</litepal>

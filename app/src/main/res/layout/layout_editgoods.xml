@@ -1,165 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
 
     >
-        <TextView
-            android:id="@+id/goodsNameText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="联想 Y50"
-            android:textSize="30sp"
-            android:gravity="center"
-            android:textColor="@color/textColorDark"
-            android:layout_margin="16dp"/>
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
 
-            android:layout_margin="10dp"
-            >
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <LinearLayout
+                android:id="@+id/goodsNameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp">
+                android:background="@drawable/layoutclick"
+                android:padding="12dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="18sp"
-                    android:text="商品状态:"/>
-                <Button
-                    android:id="@+id/stateBtn"
+                    android:text="名称："
+                    android:textColor="@color/textColorDark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/goodsNameText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:textColor="@color/textColorLight"
-                    android:text="正常"
-                    android:backgroundTint="@color/colorPrimary"/>
+                    android:gravity="end"
+                    android:text="联想Y50"
+                    android:textSize="18sp" />
             </LinearLayout>
-        </android.support.v7.widget.CardView>
 
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-           >
+            <include layout="@layout/line"></include>
 
             <LinearLayout
+                android:id="@+id/stateLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:background="@drawable/layoutclick"
+                android:padding="12dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="购买时间："
-                        android:textSize="18sp"/>
-                 <Button
-                     android:id="@+id/dateBtn"
-                     android:layout_width="0dp"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="2"
-                     android:text="1993年10月22日"
-                     android:textColor="@color/textColorLight"
-                     android:backgroundTint="@color/colorPrimary"/>
-                </LinearLayout>
+                    android:layout_weight="1"
+                    android:text="商品状态："
+                    android:textColor="@color/textColorDark"
+                    android:textSize="18sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/stateText"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp">
+                    android:layout_weight="2"
+                    android:gravity="end"
+                    android:text="正常"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="购买地点："
-                        android:textSize="18sp"
-                        android:id="@+id/textView"
-                        android:inputType="none"/>
 
-                    <EditText
-                        android:id="@+id/addressText"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:text="江苏省靖江市生祠镇"
-                        android:textSize="18sp"
-                        android:textColor="@color/textColorDark"
+    </android.support.v7.widget.CardView>
 
-                        />
 
-                    <ImageView
-                        android:id="@+id/addressImage"
-                        android:layout_width="22sp"
-                        android:layout_height="22sp"
-                        android:src="@drawable/ic_edit"
-                        android:tint="@color/colorPrimary"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
+    <android.support.v7.widget.CardView
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/dateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layoutclick"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="购买价格："
-                        android:textSize="18sp"/>
-                    <EditText
-                        android:id="@+id/priceText"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:digits="0123456789"
-                        android:maxLines="1"
-                        android:textSize="18sp"
-                        android:inputType="number"
-                        android:hint="单位/元"
-                        android:text="1999"
-                        android:editable="false"/>
-                    <ImageView
-                        android:id="@+id/priceImage"
-                        android:layout_width="22sp"
-                        android:layout_height="22sp"
-                        android:src="@drawable/ic_edit"
-                        android:tint="@color/colorPrimary"
-                        android:layout_gravity="center"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:text="购买时间："
+                    android:textColor="@color/textColorDark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/dateText"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="图片/凭证"
-                        android:textSize="18sp"/>
-                    <Button
-                        android:id="@+id/pictureBtn"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:layout_weight="2"
-                        android:text="上传图片"
-                        android:textColor="@color/textColorLight"/>
-                </LinearLayout>
+                    android:layout_weight="2"
+                    android:gravity="end"
+                    android:text="未填写"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/addressLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layoutclick"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="购买地点："
+                    android:textColor="@color/textColorDark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/addressText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="end"
+                    android:text="未填写"
+                    android:textSize="18sp"
+
+                    />
 
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/priceLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layoutclick"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="购买价格："
+                    android:textColor="@color/textColorDark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/priceText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:text="未填写"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <include layout="@layout/line"></include>
+
+            <LinearLayout
+                android:id="@+id/pictureLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layoutclick"
+                android:gravity="center"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="图片/凭证:"
+                    android:textColor="@color/textColorDark"
+
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_photo"
+                    android:tint="@color/textColor" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/goodsImage"
+                android:layout_width="320dp"
+                android:layout_height="320dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

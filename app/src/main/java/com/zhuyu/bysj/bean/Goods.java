@@ -1,12 +1,15 @@
 package com.zhuyu.bysj.bean;
 
+import org.litepal.crud.DataSupport;
+
 import java.io.Serializable;
 
 /**
  * Created by ZHUYU on 2017/2/16 0016.
  */
-public class Goods  implements Serializable {
+public class Goods  extends DataSupport implements Serializable {
     private int id;
+    private int goodsid;
     private int typeid;
     private int userid;
     private String date;
@@ -21,9 +24,19 @@ public class Goods  implements Serializable {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getGoodsid() {
+        return goodsid;
+    }
+
+    public void setGoodsid(int goodsid) {
+        this.goodsid = goodsid;
+    }
+
     public int getTypeid() {
         return typeid;
     }
@@ -79,13 +92,21 @@ public class Goods  implements Serializable {
     public void setBuy_picture(String buy_picture) {
         this.buy_picture = buy_picture;
     }
+
     @Override
     public String toString() {
-        return "Goods [id=" + id + ", typeid=" + typeid + ", userid=" + userid + ", date=" + date + ", querytimes="
-                + querytimes + ", state=" + state + ", buy_date=" + buy_date + ", buy_address=" + buy_address
-                + ", buy_price=" + buy_price + ", buy_picture=" + buy_picture + "]";
+        return "Goods{" +
+                "goodsid=" + goodsid +
+                ", typeid=" + typeid +
+                ", userid=" + userid +
+                ", date='" + date + '\'' +
+                ", querytimes=" + querytimes +
+                ", state='" + state + '\'' +
+                ", buy_date='" + buy_date + '\'' +
+                ", buy_address='" + buy_address + '\'' +
+                ", buy_price='" + buy_price + '\'' +
+                ", buy_picture='" + buy_picture + '\'' +
+                '}';
     }
-
-
 }
 

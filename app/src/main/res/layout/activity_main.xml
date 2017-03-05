@@ -28,13 +28,35 @@
         </android.support.design.widget.AppBarLayout>
 
             <!--layout_behavior属性配合AppBarLayout可以让组件不挤占toolbar的空间-->
-                <FrameLayout
-                    android:id="@+id/fragmentLayout"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:orientation="vertical"
                     >
-                </FrameLayout>
+                   <android.support.design.widget.TabLayout
+                       android:id="@+id/tablayout"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content">
+
+                   </android.support.design.widget.TabLayout>
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </android.support.v4.view.ViewPager>
+
+
+
+
+
+
+
+
+
+
+                </LinearLayout>
 
 
 
@@ -58,27 +80,7 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_margin="16dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_settings_48pt_3x"
-
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="设置"
-                android:textSize="20sp" />
-        </LinearLayout>
+       <include layout="@layout/nav_bottom"></include>
 
     </android.support.design.widget.NavigationView>
 

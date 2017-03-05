@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.zhuyu.bysj.DetailsActivity">
+    tools:context="com.zhuyu.bysj.GoodsDetailsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -53,12 +53,14 @@
             android:orientation="vertical">
 
             <include layout="@layout/layout_goodsinfo"></include>
-            <include layout="@layout/layout_moreinfo"></include>
+
+            <include  layout="@layout/layout_moreinfo"></include>
 
         </LinearLayout>
 
 
     </android.support.v4.widget.NestedScrollView>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/editBtn"
@@ -66,9 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:src="@drawable/ic_edit"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|end"
-
+        android:layout_gravity="bottom|end"
         />
 
 </android.support.design.widget.CoordinatorLayout>

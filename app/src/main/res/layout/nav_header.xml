@@ -5,14 +5,15 @@
     android:background="@drawable/background"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-    android:background="@color/colorPrimary">
+   >
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/nav_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/huge" />
+        android:src="@drawable/huge"
+        android:backgroundTint="@color/textColor"/>
 
     <TextView
         android:id="@+id/nav_accountText"
